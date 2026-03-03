@@ -1,3 +1,9 @@
+---
+title: "A Practical Tech Stack for a Neighborhood Non-Profit"
+description: "Four tools to increase efficiency of a small non profit."
+pubDate: "Mar 3 2026"
+---
+
 # A Practical Tech Stack for a Neighborhood Non-Profit
 
 I recently became treasurer of the [Stuyvesant Park Neighborhood Association](https://spnanyc.org), a long-running community organization in NYC. We run on an annual budget of about $100k with an endowment of about $150k, but our tools had not kept up with the organization.
