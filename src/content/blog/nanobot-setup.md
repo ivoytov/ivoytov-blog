@@ -8,7 +8,7 @@ Since OpenClaw first went viral, I wanted to have an AI agent, but I was very wo
 
 I recently setup [Nanobot](https://github.com/HKUDS/nanobot) and found it to be not only easier to configure, but also much more secure from ground up.
 
-First follow the basic instructions on how to set it up on your local machine. I got it connected to Telegram for chat and to a new Google Workspace email account.
+First follow the basic instructions on how to set it up on your local machine. I got it connected to Telegram for chat and to a new Google Workspace email account - I picked `agent@ai.voytov.com`. I use iCloud Email for my personal email, but went with Google Workspace due to easier user provisioning than creating a new Apple account.
 
 Then it's time to move it to the cloud. I initially used Digital Ocean, but they block port 587 (SMTP) by default. Although it only took 24 hours for them to unblock it, I already moved to Hetzner VPS and recommend you start there.
 
@@ -16,6 +16,7 @@ Then it's time to move it to the cloud. I initially used Digital Ocean, but they
 ---
 
 ## 1. Server Provisioning & Prep
+
 * **The Host:** Spin up a Hetzner Cloud instance (CX22 is usually plenty). Choose the **Docker** "App" image (Ubuntu-based).
 * **The "Brain" Directory:** Create the local config folder and fix permissions immediately. The container runs as user `1000`, so the host must grant ownership:
     ```bash
@@ -27,6 +28,7 @@ Then it's time to move it to the cloud. I initially used Digital Ocean, but they
 ---
 
 ## 2. Environment & Code
+
 * **Deployment:** `git clone` your nanobot repository into `~/nanobot-app`.
 * **Secrets:** Create a `.env` file inside `~/nanobot-app/`. 
     > **Highlight:** Do not hardcode API keys in the JSON. Use the `.env` for `OPENAI_API_KEY`, `TELEGRAM_TOKEN`, etc., and ensure it is secured: `chmod 600 .env`.
@@ -83,9 +85,6 @@ echo "kernel.apparmor_restrict_unprivileged_userns=0" | sudo tee /etc/sysctl.d/6
 echo "kernel.unprivileged_userns_clone=1" | sudo tee -a /etc/sysctl.d/60-bwrap-userns.conf
 ```
 
-### B. Network Routing
-* **SMTP:** Unlike DigitalOcean, Hetzner typically allows outbound traffic on **Port 587**. If you use Gmail/Google Workspace, no extra support tickets are needed.
-* **IPv4 Priority:** The `enable_ipv6: false` in Compose is the "silent fix" for web search tools that hang while trying to resolve IPv6 addresses that the Docker bridge can't route.
 
 ---
 
@@ -101,11 +100,3 @@ docker restart nanobot-gateway && docker logs -f nanobot-gateway
 ```
 
 ---
-
-## Troubleshooting Summary (The "Omitted" Bits)
-| Issue | Symptom | Fix |
-| :--- | :--- | :--- |
-| **Bwrap Permission Denied** | `setting up uid map: Permission denied` | Add `SETUID`/`SETGID` to Compose AND run `sysctl` on the host. |
-| **Config Read Error** | `Permission denied` on startup | `chown -R 1000:1000 ~/.nanobot` on the host. |
-| **Web Search Failure** | Search tools return empty or timeout | Disable IPv6 in the Docker Compose network block. |
-| **Email Send Failure** | `Network is unreachable` on port 587 | Check host firewall, but on Hetzner, this is usually solved by the IPv6 fix. |
