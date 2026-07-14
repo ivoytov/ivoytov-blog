@@ -1,7 +1,7 @@
 ---
 title: "NYC Foreclosure Tracker"
 description: "forqloz compresses hours of foreclosure auction research into a single weekly digest."
-pubDate: "Jun 19 2025"
+date: "Jun 19 2025"
 heroImage: "/nyc.png"
 ---
 

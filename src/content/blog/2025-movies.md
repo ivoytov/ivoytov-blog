@@ -1,7 +1,7 @@
 ---
 title: "Movies to Watch 2025"
 description: "Movies that I liked."
-pubDate: "Dec 1 2025"
+date: "Dec 1 2025"
 ---
 
 In no particular order, here are the movies that stood out to me in 2025.

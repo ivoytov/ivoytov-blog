@@ -9,10 +9,21 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     // Transform string to Date object
-    pubDate: z.coerce.date(),
+    date: z.coerce.date(),
+    draft: z.boolean().optional(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
   }),
 });
 
-export const collections = { blog };
+const work = defineCollection({
+  loader: glob({ base: "./src/content/work", pattern: "**/*.{md,mdx}" }),
+  schema: z.object({
+    company: z.string(),
+    role: z.string(),
+    dateStart: z.coerce.date(),
+    dateEnd: z.union([z.coerce.date(), z.string()]),
+  }),
+});
+
+export const collections = { blog, work };

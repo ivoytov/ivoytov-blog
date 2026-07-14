@@ -1,7 +1,7 @@
 ---
 title: "Agent Next Steps"
 description: "Ideas of what to do with your agent"
-pubDate: "May 10 2026"
+date: "May 10 2026"
 ---
 
 Since setting up my [Nanobot agent](nanobot-setup.md) I've been giving it increasingly more complex tasks and ran into a few limitations. Here are the problems and solutions I've discovered.

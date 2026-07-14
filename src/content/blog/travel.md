@@ -1,7 +1,7 @@
 ---
 title: "My Hobbies"
 description: "Pics from travels"
-pubDate: "Mar 14 2024"
+date: "Mar 14 2024"
 heroImage: "/Skiing.jpg"
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Behind the Scenes at the NYSE: A Floor Trader's World"
 description: "Ringing the closing bell."
-pubDate: "Mar 14 2024"
+date: "Mar 14 2024"
 heroImage: "/nyse-1.jpg"
 ---
 

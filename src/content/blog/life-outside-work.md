@@ -1,7 +1,7 @@
 ---
 title: "Life Outside Work"
 description: "Adventures, training, art, and family moments that keep me energized."
-pubDate: "Jun 24 2025"
+date: "Jun 24 2025"
 heroImage: "/Grand-Canyon.jpg"
 ---
 

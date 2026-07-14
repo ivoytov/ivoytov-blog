@@ -1,7 +1,7 @@
 ---
 title: "Custom NYC Home Price Index: A Flexible Alternative to Zillow"
 description: "A transparent repeat-sales model for anyone who needs NYC housing signals they can audit."
-pubDate: "Jun 03 2025"
+date: "Jun 03 2025"
 heroImage: "/NYCHome.jpg"
 ---
 

@@ -1,52 +1,102 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection, render } from "astro:content";
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import { SITE, HOME, SOCIALS } from "@consts";
+import { dateRange } from "@lib/utils";
+
+const blog = (await getCollection("blog"))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+
+const work = await Promise.all(
+  (await getCollection("work"))
+    .sort((a, b) => b.data.dateStart.valueOf() - a.data.dateStart.valueOf())
+    .slice(0, SITE.NUM_WORKS_ON_HOMEPAGE)
+    .map(async (item) => {
+      const { Content } = await render(item);
+      return { ...item, Content };
+    }),
+);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>Ilya Voytov</h1>
-			<p>
-				I'm a Senior Vice President at Lazard Asset Management, working on Quant Research. 
-				My focus is on developing alpha models to be used in trading global equities.
-				Our strategy is long-only with medium frequency turnover.
-				I've been living in New York City since 2020.
-			</p>
-			<p>
-				I've previously spent 13 years as Head of Research at Vector Capital in San Francisco.
-				While there, I focused on identifying special situations and catalyst-driven investments 
-				in high yield and syndicated loan markets. I have experience in long/short investing across 
-				variety of industries and geographies.
-			</p>
-			<p>
-				I started my career at JPMorgan's investment bank. My office was on the 5th floor of the
-				original 270 Park Ave tower, now demolished and replaced with a wonderful new building 
-				for JPM's global headquarters. 
-			</p>
-			<p>
-				I'm an avid runner and a member of <a href="https://www.newyorkharriers.com">New York Harriers</a> running club.
-				I participate in running competitions through the year. I also like surfing in the Rockaways. 
-				My favorite building is the IAC Headquarters.
-			</p>
-			<p>Here are my active tech projects:</p>
-			<ul>
-				<li><a href="https://ivoytov.github.io/forqloz">NYC Foreclosure Auction Tracker</a></li>
-				<li><a href="https://ivoytov.github.io/manhattan">NYC Real Estate Repeat Sales Index</a></li>
-			</ul>
-			<p>
-				You can reach me at <a href="https://www.threads.com/@goilya">@goilya on Threads</a> or 
-				email me at <a href="mailto:ilya@voytov.com">ilya@voytov.com</a>.
-			</p>
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Container>
+    <h4 class="animate font-semibold text-black dark:text-white">
+      Hi, I'm Ilya <span class="text-xl">👋🏻</span>
+    </h4>
+    <div class="space-y-16">
+      <section>
+        <article class="space-y-4">
+          <p class="animate">
+            I'm a Senior Vice President at Lazard Asset Management, working on quant research.
+            I develop alpha models used to trade global equities in long-only, medium-turnover strategies.
+          </p>
+          <p class="animate">
+            Previously, I spent thirteen years as Head of Research at Vector Capital in San Francisco,
+            focused on special situations and catalyst-driven investments in high-yield and syndicated-loan markets.
+            I started my career in investment banking at JPMorgan.
+          </p>
+          <p class="animate">
+            I live in New York City, run with the
+            <Link href="https://www.newyorkharriers.com" external>New York Harriers</Link>,
+            and surf in the Rockaways.
+          </p>
+        </article>
+      </section>
 
-		</main>
-		<Footer />
-	</body>
-</html>
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">Latest posts</h5>
+          <Link href="/blog">See all posts</Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {blog.map((post) => <li><ArrowCard entry={post} /></li>)}
+        </ul>
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">Work Experience</h5>
+          <Link href="/work">See all work</Link>
+        </div>
+        <ul class="flex flex-col space-y-4">
+          {work.map((entry) => (
+            <li>
+              <div class="text-sm opacity-75">
+                {dateRange(entry.data.dateStart, entry.data.dateEnd)}
+              </div>
+              <div class="font-semibold text-black dark:text-white">
+                {entry.data.company}
+              </div>
+              <div class="text-sm opacity-75">{entry.data.role}</div>
+              <article><entry.Content /></article>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section class="animate space-y-4">
+        <h5 class="font-semibold text-black dark:text-white">Let's Connect</h5>
+        <ul class="flex flex-wrap gap-2">
+          {SOCIALS.map((social) => (
+            <li class="flex gap-x-2 text-nowrap">
+              <Link href={social.HREF} external aria-label={`${SITE.NAME} on ${social.NAME}`}>
+                {social.NAME}
+              </Link>
+              {"/"}
+            </li>
+          ))}
+          <li class="line-clamp-1">
+            <Link href={`mailto:${SITE.EMAIL}`} aria-label={`Email ${SITE.NAME}`}>
+              {SITE.EMAIL}
+            </Link>
+          </li>
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>

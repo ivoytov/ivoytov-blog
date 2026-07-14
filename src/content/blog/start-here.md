@@ -1,7 +1,7 @@
 ---
 title: "Start Here"
 description: "Career timeline, current role, and how to connect."
-pubDate: "Jun 05 2025"
+date: "Jun 05 2025"
 heroImage: "/Ilya-Voytov-1.jpg"
 ---
 

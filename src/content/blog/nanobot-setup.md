@@ -1,7 +1,7 @@
 ---
 title: "Guide to Setting up a Nanobot (better Openclaw)"
 description: "Technical guide to setting up Openclaw in a secure and affordable way"
-pubDate: "Apr 10 2026"
+date: "Apr 10 2026"
 ---
 
 Since OpenClaw first went viral, I wanted to have an AI agent, but I was very worried about security.

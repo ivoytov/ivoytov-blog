@@ -1,7 +1,7 @@
 ---
 title: "Books to Read 2025"
 description: "Fiction and non-fiction Books that I liked."
-pubDate: "Dec 2 2025"
+date: "Dec 2 2025"
 ---
 
 ## Non-Fiction 
